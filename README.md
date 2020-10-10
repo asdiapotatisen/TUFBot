@@ -5,6 +5,8 @@ A Discord bot for the The United Federations community.
 Creates ships and fleets. Pretty straightforward.
 ### Self Role
 Allows non-moderators to add alliance and other misc. roles to themselves.
+### Suggestions
+Allows users to suggest features for TUF Bot or for the community in general. Sends suggestion to a suggestions channel.
 
 ## Upcoming Features
 None as of right now.
@@ -12,8 +14,6 @@ None as of right now.
 ## Planned Features
 ### Battle Simulator
 Uses the fleets from Ships and Fleets to simulate a battle.
-### Suggestions
-Allows users to suggest features for TUF Bot or for the community in general. Sends suggestion to a suggestions channel
 ### Mod Approval System
 Could be implemented in all main features.
 
