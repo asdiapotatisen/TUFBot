@@ -2,8 +2,8 @@ Discord bot that creates ships and fleets for TUF. Currently a Work-In-Progress
 
 ## Things to do
 ### Fixes
-- Bot running code in two channels instead of one
-- Bot saying nation has been created when it has not
+None at the moment. Huzzah!
+
 ### Content
 - Create
   - Fleets
