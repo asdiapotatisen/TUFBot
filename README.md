@@ -1,4 +1,3 @@
-# TUF-Bot
 A Discord bot for the The United Federations community.
 
 ## Current Features
