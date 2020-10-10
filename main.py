@@ -119,17 +119,17 @@ async def create(ctx):
                                             await channel.send("Please choose a class.")
                                             embedclasslist = discord.Embed(title='List of Ship Classes', description='Please enter the number next to the class of your choice.')
                                             embedclasslist.add_field(name="Classifications", value="""1: Striker
-    2: Corvette
-    3: Frigate
-    4: Destroyer
-    5: Cruiser
-    6: Battlecruiser
-    7: Battleship
-    8: Light Carrier
-    9: Dreadnaught
-    10: Carrier
-    11: Battlesphere
-    12: Battleglobe""", inline=False)
+2: Corvette
+3: Frigate
+4: Destroyer
+5: Cruiser
+6: Battlecruiser
+7: Battleship
+8: Light Carrier
+9: Dreadnaught
+10: Carrier
+11: Battlesphere
+12: Battleglobe""", inline=False)
                                             await channel.send(embed=embedclasslist)
                                             try:
                                                 await client.wait_for('message', timeout=60)
@@ -498,13 +498,13 @@ async def create(ctx):
                                                     await channel.send("Please enter the amount of points you wish to spend on health")
                                                     embedhealthallo = discord.Embed(title='Health', description='Points must not exceed remaining points.')
                                                     embedhealthallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: -
-    Defense Points: -
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints), inline=False)
+Max Points: {}
+Health Points: -
+Defense Points: -
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints), inline=False)
                                                     await channel.send(embed=embedhealthallo)
                                                     try:
                                                         await client.wait_for('message', timeout=60)
@@ -524,13 +524,13 @@ async def create(ctx):
                                                                     await channel.send("Please enter the amount of points you wish to spend on defense.")
                                                                     embeddefenseallo = discord.Embed(title='Defense', description='Points must not exceed remaining points.')
                                                                     embeddefenseallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: -
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: -
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health), inline=False)
                                                                     await channel.send(embed=embeddefenseallo)
                                                                     try:
                                                                         await client.wait_for('message', timeout=60)
@@ -550,13 +550,13 @@ async def create(ctx):
                                                                                     await channel.send("Please enter the amount of points you wish to spend on speed.")
                                                                                     embedspeedallo = discord.Embed(title='Speed', description='Points must not exceed remaining points.')
                                                                                     embedspeedallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense), inline=False)
                                                                                     await channel.send(embed=embedspeedallo)
                                                                                     try:
                                                                                         await client.wait_for('message', timeout=60)
@@ -576,13 +576,13 @@ async def create(ctx):
                                                                                                     await channel.send("Please enter the amount of points you wish to spend on close attack.")
                                                                                                     embedcloseallo = discord.Embed(title='Close Attack', description='Points must not exceed remaining points.')
                                                                                                     embedcloseallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed), inline=False)
                                                                                                     await channel.send(embed=embedcloseallo)
                                                                                                     try:
                                                                                                         await client.wait_for('message', timeout=60)
@@ -602,13 +602,13 @@ async def create(ctx):
                                                                                                                     await channel.send("Please enter the amount of points you wish to spend on medium attack.")
                                                                                                                     embedmediumallo = discord.Embed(title='Medium Attack', description='Points must not exceed remaining points.')
                                                                                                                     embedmediumallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: {}
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: {}
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt), inline=False)
                                                                                                                     await channel.send(embed=embedmediumallo)
                                                                                                                     try:
                                                                                                                         await client.wait_for('message', timeout=60)
@@ -628,13 +628,13 @@ async def create(ctx):
                                                                                                                                     await channel.send("Please enter the amount of points you wish to spend on long attack.")
                                                                                                                                     embedlongallo = discord.Embed(title='Medium Attack', description='Points must not exceed remaining points.')
                                                                                                                                     embedlongallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: {}
-    Medium Attack Points: {}
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt, medatt), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: {}
+Medium Attack Points: {}
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt, medatt), inline=False)
                                                                                                                                     await channel.send(embed=embedlongallo)
                                                                                                                                     try:
                                                                                                                                         await client.wait_for('message', timeout=60)
@@ -686,8 +686,8 @@ async def create(ctx):
                                                                                                                                                     await channel.send("Ship successfuly created.")
                                                                                                                                                     embedsummary = discord.Embed(title='Summary', description='{}'.format(shipname))
                                                                                                                                                     embedsummary.add_field(name='Properties', value="""Nation: {}
-    Class: {}
-    Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
+Class: {}
+Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
                                                                                                                                                     healthscore = datadic[userid][nationnamecheck]['ships'][shipname]['health']
                                                                                                                                                     defensescore = datadic[userid][nationnamecheck]['ships'][shipname]['defense']
                                                                                                                                                     speedscore = datadic[userid][nationnamecheck]['ships'][shipname]['speed']
@@ -696,11 +696,11 @@ async def create(ctx):
                                                                                                                                                     longscore = datadic[userid][nationnamecheck]['ships'][shipname]['long']
 
                                                                                                                                                     embedsummary.add_field(name='Stats', value="""Health: {}
-    Defense: {}
-    Speed: {}
-    Close Attack: {}
-    Medium Attack: {}
-    Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
+Defense: {}
+Speed: {}
+Close Attack: {}
+Medium Attack: {}
+Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
                                                                                                                                                     await channel.send(embed=embedsummary)
                                                                                                                                                     canrun = False
                                         else:
@@ -794,17 +794,17 @@ async def edit(ctx):
                                             await channel.send("Please choose a class.")
                                             embedclasslist = discord.Embed(title='List of Ship Classes', description='Please enter the number next to the class of your choice.')
                                             embedclasslist.add_field(name="Classifications", value="""1: Striker
-    2: Corvette
-    3: Frigate
-    4: Destroyer
-    5: Cruiser
-    6: Battlecruiser
-    7: Battleship
-    8: Light Carrier
-    9: Dreadnaught
-    10: Carrier
-    11: Battlesphere
-    12: Battleglobe""", inline=False)
+2: Corvette
+3: Frigate
+4: Destroyer
+5: Cruiser
+6: Battlecruiser
+7: Battleship
+8: Light Carrier
+9: Dreadnaught
+10: Carrier
+11: Battlesphere
+12: Battleglobe""", inline=False)
                                             await channel.send(embed=embedclasslist)
                                             try:
                                                 await client.wait_for('message', timeout=60)
@@ -1193,23 +1193,23 @@ async def edit(ctx):
 
                                                     embedcurrentpoints = discord.Embed(title = 'Current Points')
                                                     embedcurrentpoints.add_field(name='Stats', value = """Health: {}
-    Defense: {}
-    Speed: {}
-    Close Attack: {}
-    Medium Attack: {}
-    Long Attack: {}""".format(healthpoint, defensepoint, speedpoint, closepoint, medpoint, longpoint), inline=False)
+Defense: {}
+Speed: {}
+Close Attack: {}
+Medium Attack: {}
+Long Attack: {}""".format(healthpoint, defensepoint, speedpoint, closepoint, medpoint, longpoint), inline=False)
                                                     await channel.send(embed=embedcurrentpoints)
                                                     await channel.send("You have {} points left.".format(remain))
                                                     await channel.send("Please enter the amount of points you wish to spend on health")
                                                     embedhealthallo = discord.Embed(title='Health', description='Points must not exceed remaining points.')
                                                     embedhealthallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: -
-    Defense Points: -
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints), inline=False)
+Max Points: {}
+Health Points: -
+Defense Points: -
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints), inline=False)
                                                     await channel.send(embed=embedcurrentpoints)
                                                     try:
                                                         await client.wait_for('message', timeout=60)
@@ -1229,13 +1229,13 @@ async def edit(ctx):
                                                                     await channel.send("Please enter the amount of points you wish to spend on defense.")
                                                                     embeddefenseallo = discord.Embed(title='Defense', description='Points must not exceed remaining points.')
                                                                     embeddefenseallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: -
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: -
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health), inline=False)
                                                                     await channel.send(embed=embeddefenseallo)
                                                                     try:
                                                                         await client.wait_for('message', timeout=60)
@@ -1255,13 +1255,13 @@ async def edit(ctx):
                                                                                     await channel.send("Please enter the amount of points you wish to spend on speed.")
                                                                                     embedspeedallo = discord.Embed(title='Speed', description='Points must not exceed remaining points.')
                                                                                     embedspeedallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: -
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: -
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense), inline=False)
                                                                                     await channel.send(embed=embedspeedallo)
                                                                                     try:
                                                                                         await client.wait_for('message', timeout=60)
@@ -1281,13 +1281,13 @@ async def edit(ctx):
                                                                                                     await channel.send("Please enter the amount of points you wish to spend on close attack.")
                                                                                                     embedcloseallo = discord.Embed(title='Close Attack', description='Points must not exceed remaining points.')
                                                                                                     embedcloseallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: -
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: -
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed), inline=False)
                                                                                                     await channel.send(embed=embedcloseallo)
                                                                                                     try:
                                                                                                         await client.wait_for('message', timeout=60)
@@ -1307,13 +1307,13 @@ async def edit(ctx):
                                                                                                                     await channel.send("Please enter the amount of points you wish to spend on medium attack.")
                                                                                                                     embedmediumallo = discord.Embed(title='Medium Attack', description='Points must not exceed remaining points.')
                                                                                                                     embedmediumallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: {}
-    Medium Attack Points: -
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: {}
+Medium Attack Points: -
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt), inline=False)
                                                                                                                     await channel.send(embed=embedmediumallo)
                                                                                                                     try:
                                                                                                                         await client.wait_for('message', timeout=60)
@@ -1333,13 +1333,13 @@ async def edit(ctx):
                                                                                                                                     await channel.send("Please enter the amount of points you wish to spend on long attack.")
                                                                                                                                     embedlongallo = discord.Embed(title='Medium Attack', description='Points must not exceed remaining points.')
                                                                                                                                     embedlongallo.add_field(name="Stats", value="""Remaining Points: {}
-    Max Points: {}
-    Health Points: {}
-    Defense Points: {}
-    Speed Points: {}
-    Close Attack Points: {}
-    Medium Attack Points: {}
-    Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt, medatt), inline=False)
+Max Points: {}
+Health Points: {}
+Defense Points: {}
+Speed Points: {}
+Close Attack Points: {}
+Medium Attack Points: {}
+Long Attack Points: -""".format(remain, maxpoints, health, defense, speed, closeatt, medatt), inline=False)
                                                                                                                                     await channel.send(embed=embedlongallo)
                                                                                                                                     try:
                                                                                                                                         await client.wait_for('message', timeout=60)
@@ -1391,8 +1391,8 @@ async def edit(ctx):
                                                                                                                                                     await channel.send("Ship successfully edited.")
                                                                                                                                                     embedsummary = discord.Embed(title='Summary', description='{}'.format(shipname))
                                                                                                                                                     embedsummary.add_field(name='Properties', value="""Nation: {}
-    Class: {}
-    Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
+Class: {}
+Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
                                                                                                                                                     healthscore = datadic[userid][nationnamecheck]['ships'][shipname]['health']
                                                                                                                                                     defensescore = datadic[userid][nationnamecheck]['ships'][shipname]['defense']
                                                                                                                                                     speedscore = datadic[userid][nationnamecheck]['ships'][shipname]['speed']
@@ -1400,11 +1400,11 @@ async def edit(ctx):
                                                                                                                                                     medscore = datadic[userid][nationnamecheck]['ships'][shipname]['med']
                                                                                                                                                     longscore = datadic[userid][nationnamecheck]['ships'][shipname]['long']
                                                                                                                                                     embedsummary.add_field(name='Stats', value="""Health: {}
-    Defense: {}
-    Speed: {}
-    Close Attack: {}
-    Medium Attack: {}
-    Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
+Defense: {}
+Speed: {}
+Close Attack: {}
+Medium Attack: {}
+Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
                                                                                                                                                     await channel.send(embed=embedsummary)
 
                                         else:
@@ -1509,8 +1509,8 @@ async def view(ctx):
                                                         shipclass = datadic[userid][nationnamecheck]['ships'][shipname]['shipclass']
                                                         embedsummary = discord.Embed(title='Summary', description='{}'.format(shipname))
                                                         embedsummary.add_field(name='Properties', value="""Nation: {}
-    Class: {}
-    Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
+Class: {}
+Name: {}""".format(nationnamecheck, shipclass, shipname), inline=False)
                                                         healthscore = datadic[userid][nationnamecheck]['ships'][shipname]['health']
                                                         defensescore = datadic[userid][nationnamecheck]['ships'][shipname]['defense']
                                                         speedscore = datadic[userid][nationnamecheck]['ships'][shipname]['speed']
@@ -1518,11 +1518,11 @@ async def view(ctx):
                                                         medscore = datadic[userid][nationnamecheck]['ships'][shipname]['medatt']
                                                         longscore = datadic[userid][nationnamecheck]['ships'][shipname]['longatt']
                                                         embedsummary.add_field(name='Stats', value="""Health: {}
-    Defense: {}
-    Speed: {}
-    Close Attack: {}
-    Medium Attack: {}
-    Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
+Defense: {}
+Speed: {}
+Close Attack: {}
+Medium Attack: {}
+Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
 
                                                         await channel.send(embedsummary)
                                                     else:
