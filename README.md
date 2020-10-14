@@ -14,18 +14,11 @@ Creates ships and fleets. Pretty straightforward.
 None at the moment. Huzzah!
 
 #### Content
-- Create
-  - Fleets
-- Edit
-  - Ships
-    Test
-  - Fleets
 - Delete
   - Ships
   - Fleets
 - View
   - Ships
-    Test
   - Fleets
 - Send summary to other channel once completed (for mod purposes)
   - Mod approval system?
