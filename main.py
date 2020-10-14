@@ -211,6 +211,7 @@ async def create(ctx):
                                 # check if nation exists: if false, proceed
                                 try:
                                     f = open(filename)
+                                    f.close()
                                 except FileNotFoundError:
                                     nationfile = open(filename,"w+")
                                     nation = {"ships":{}, "fleets":{}, "location":{}, "userid":userid}
@@ -736,7 +737,173 @@ async def edit(ctx):
 
 @client.command(name='delete')
 async def delete(ctx):
-    return
+    global channel1available
+    global channel2available
+    global channel3available
+    user = ctx.message.author
+    userid = ctx.author.id
+    canrun = None
+    if channel1available == True:
+        channel1available = False
+        channel = client.get_channel(764017189279236096)
+        role1 = 'ships and fleets 1' #role to add
+        await user.add_roles(discord.utils.get(user.guild.roles, name=role1))
+        canrun = True
+    elif channel2available == True:
+        channel2available = False
+        channel = client.get_channel(764017265125228544)
+        role2 = 'ships and fleets 2' #role to add
+        await user.add_roles(discord.utils.get(user.guild.roles, name=role2))
+        canrun = True
+    elif channel3available == True:
+        channel3available = False
+        channel = client.get_channel(764017300424622100)
+        role3 = 'ships and fleets 3' #role to add
+        await user.add_roles(discord.utils.get(user.guild.roles, name=role3))
+        canrun = True
+    else:
+        await ctx.send("All channels are currently unavailable. Please try again later.")
+    while canrun == True:
+        await channel.send("<@{}>, please move here.".format(userid))
+        await channel.send("What would you like to delete? (nation/ship/fleet)")
+        try:
+            await client.wait_for('message', timeout=60)
+        except asyncio.TimeoutError:
+            await channel.send(embed=embedtimeout)
+            canrun = False
+        else:
+            async for message in channel.history(limit=1):
+                if message.content == "nation" and message.author == user:
+                    await channel.send("What is the name of the nation?")
+                    try:
+                        await client.wait_for('message', timeout=60)
+                    except asyncio.TimeoutError:
+                        await channel.send(embed=embedtimeout)
+                        canrun = False
+                    else:
+                        async for message in channel.history(limit=1):
+                            if message.author == user:
+                                filename = message.content + ".txt"
+                                nationname = message.content
+                                try:
+                                    f = open(filename)
+                                    f.close()
+                                except FileNotFoundError:
+                                    await channel.send("That nation does not exist.")
+                                    canrun = False
+                                else:
+                                    with open(filename) as json_file:
+                                        nationfile = json.load(json_file)
+                                    if nationfile["userid"] == userid:
+                                        os.remove("{}".format(filename))
+                                        await channel.send("{} removed.".format(nationname))
+                                        canrun = False
+                                    else:
+                                        await channel.send("You do not own this nation!")
+                                        canrun = False
+                if message.content == "ship" and message.author == user:
+                    await channel.send("What is the name of the nation that contains the ship you wish to remove?")
+                    try:
+                        await client.wait_for('message', timeout=60)
+                    except asyncio.TimeoutError:
+                        await channel.send(embed=embedtimeout)
+                        canrun = False
+                    else:
+                        async for message in channel.history(limit=1):
+                            if message.author == user:
+                                filename = message.content + ".txt"
+                                nationname = message.content
+                                try:
+                                    f = open(filename)
+                                    f.close()
+                                except FileNotFoundError:
+                                    await channel.send("That nation does not exist.")
+                                    canrun = False
+                                else:
+                                    await channel.send("What is that name of the ship you wish to remove?")
+                                    try:
+                                        await client.wait_for('message', timeout=60)
+                                    except asyncio.TimeoutError:
+                                        await channel.send(embed=embedtimeout)
+                                        canrun = False
+                                    else:
+                                        async for message in channel.history(limit=1):
+                                            if message.author == user:
+                                                shipname = message.content
+                                                with open(filename) as json_file:
+                                                    nation = json.load(json_file)
+                                                if nation["userid"] == userid:
+                                                    if keys_exists(nation, "ships", shipname):
+                                                        del nation["ships"][shipname]
+                                                        with open(filename, 'w') as outfile:
+                                                            json.dump(nation, outfile)
+                                                        await channel.send("{} has been deleted.".format(shipname))
+                                                        canrun = False
+                                                    else:
+                                                        await channel.send("{} does not exist.".format(shipname))
+                                                        canrun = False
+                                                else:
+                                                    await channel.send("You do not own this nation!")
+                                                    canrun = False
+                if message.content == "fleet" and message.author == user:
+                    await channel.send("What is the name of the nation that contains the fleet you wish to remove?")
+                    try:
+                        await client.wait_for('message', timeout=60)
+                    except asyncio.TimeoutError:
+                        await channel.send(embed=embedtimeout)
+                        canrun = False
+                    else:
+                        async for message in channel.history(limit=1):
+                            if message.author == user:
+                                filename = message.content + ".txt"
+                                nationname = message.content
+                                try:
+                                    f = open(filename)
+                                    f.close()
+                                except FileNotFoundError:
+                                    await channel.send("That nation does not exist.")
+                                    canrun = False
+                                else:
+                                    await channel.send("What is that name of the fleet you wish to remove?")
+                                    try:
+                                        await client.wait_for('message', timeout=60)
+                                    except asyncio.TimeoutError:
+                                        await channel.send(embed=embedtimeout)
+                                        canrun = False
+                                    else:
+                                        async for message in channel.history(limit=1):
+                                            if message.author == user:
+                                                fleetname = message.content
+                                                with open(filename) as json_file:
+                                                    nation = json.load(json_file)
+                                                if nation["userid"] == userid:
+                                                    if keys_exists(nation, "fleets", shipname):
+                                                        del nation["fleets"][shipname]
+                                                        with open(filename, 'w') as outfile:
+                                                            json.dump(nation, outfile)
+                                                        await channel.send("{} has been deleted.".format(fleetname))
+                                                        canrun = False
+                                                    else:
+                                                        await channel.send("{} does not exist.".format(fleetname))
+                                                        canrun = False
+                                                else:
+                                                    await channel.send("You do not own this nation!")
+                                                    canrun = False
+
+
+    if canrun == False:
+        if channel == client.get_channel(764017189279236096):
+            channel1available = True
+            role4 = 'ships and fleets 1' #role to add
+            await user.remove_roles(discord.utils.get(user.guild.roles, name=role4))
+        elif channel == client.get_channel(764017265125228544):
+            channel2available = True
+            role5 = 'ships and fleets 2' #role to add
+            await user.remove_roles(discord.utils.get(user.guild.roles, name=role5))
+        elif channel == client.get_channel(764017300424622100):
+            channel3available = True
+            role6 = 'ships and fleets 3' #role to add
+            await user.remove_roles(discord.utils.get(user.guild.roles, name=role6))
 
 @client.command(name='view')
 async def view(ctx):
