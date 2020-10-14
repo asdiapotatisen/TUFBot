@@ -44,20 +44,6 @@ async def roll(ctx, arg1):
         await ctx.send(embed=embedvalueerror)
 
 # Add/Remove Roles
-embedrole = discord.Embed(title='Available roles')
-embedrole.add_field(name='Do !role <add/remove> <rolename> to receive the role', value="""Dead, but hidden
-map editor
-#Anime
-SHB
-Nova Aeterna
-norrpakten
-GL
-Eternal Cosmos""")
-
-@client.command(name='roles')
-async def roles(ctx):
-    await ctx.send(embed=embedrole)
-
 @client.command(name='role')
 async def role(ctx, arg1, arg2):
     user = ctx.message.author
@@ -116,7 +102,15 @@ async def role(ctx, arg1, arg2):
         else:
             await ctx.send("Invalid role.")
     else:
-        await ctx.send("Invalid action.")
+        await ctx.send("""Invalid role. Obtainable roles:
+[dead]  Dead, but hidden
+[map]   map editor
+[anime] #Anime
+[shb]   SHB
+[na]    Nova Aeterna
+[nrp]   norrpakten
+[gl]    GL
+[ec]    Eternal Cosmos""")
 
 # Suggest
 @client.command(name='suggest')
@@ -158,62 +152,6 @@ async def suggest(ctx):
                                         embedsuggest.add_field(name="Solution", value="{}".format(solution), inline=False)
                                         channel = client.get_channel(666213834675060749)
                                         await channel.send(embed=embedsuggest)
-
-# Article
-@client.command(name='write')
-async def write(ctx):
-    user = ctx.message.author
-    channel = client.get_channel(664615244236062727)
-    await channel.send("Please enter the name of the article.")
-    try:
-        await client.wait_for('message', timeout=60)
-    except asyncio.TimeoutError:
-        await channel.send("Too late.")
-    else:
-        async for message in channel.history(limit=1):
-            if message.author == user:
-                name = message.content + ".txt"
-                try:
-                    f = open(name)
-                except IOError:
-                    newfile = open(name,"w+")
-                    await channel.send("Please enter the content of the article.")
-                    try:
-                        await client.wait_for('message', timeout=60)
-                    except asyncio.TimeoutError:
-                        await channel.send("Too late.")
-                    else:
-                        async for message in channel.history(limit=1):
-                            if message.author == user:
-                                content = message.content
-                                json.dump(content, newfile)
-                                await channel.send("Done.")
-                                newfile.close()
-                else:
-                    f.close()
-                    await channel.send("An article with that name already exists.")
-
-@client.command(name='read')
-async def read(ctx):
-    user = ctx.message.author
-    channel = client.get_channel(664615244236062727)
-    await channel.send("Which article would you like to read?")
-    try:
-        await client.wait_for('message', timeout=60)
-    except asyncio.TimeoutError:
-        await channel.send("TOo late.")
-    else:
-        async for message in channel.history(limit=1):
-            if message.author == user:
-                name = message.content + ".txt"
-                try:
-                    openfile = open(name, "r")
-                    openfile_contents = openfile.read()
-                    await channel.send("__**{}**__".format(name))
-                    await channel.send(openfile_contents)
-                    openfile.close()
-                except IOError:
-                    await channel.send("Article does not exist.")
 
 # Ships and Fleets
 channel1available = True
@@ -275,7 +213,7 @@ async def create(ctx):
                                     f = open(filename)
                                 except FileNotFoundError:
                                     nationfile = open(filename,"w+")
-                                    nation = {"sships":{}, "fleets":{}, "location":{}, "userid":userid}
+                                    nation = {"ships":{}, "fleets":{}, "location":{}, "userid":userid}
                                     json.dump(nation, nationfile)
                                     await channel.send("{} has been created.".format(nationname))
                                     nationfile.close()
@@ -661,13 +599,120 @@ Close Attack: {}
 Medium Attack: {}
 Long Attack: {}""".format(healthscore, defensescore, speedscore, closescore, medscore, longscore), inline=False)
                                                                                                                                                                     await channel.send(embed=embedsummary)
-                                                                                                                                                                    channeltemp = client.get_channel(765578014855135232)
-                                                                                                                                                                    await channeltemp.send(embed=embedsummary)
                                                                                                                                                                     canrun = False
                                 else:
                                     await channel.send("You do not own that nation.")
-                if message.content == "fleets" and message.author == user:
-                    return
+                if message.content == "fleet" and message.author == user:
+                    await channel.send("Please enter the name of the nation that you want to create the fleet in.")
+                    try:
+                        await client.wait_for('message', timeout=60)
+                    except asyncio.TimeoutError:
+                        await channel.send(embed=embedtimeout)
+                        canrun = False
+                    else:
+                        async for message in channel.history(limit=1):
+                            nationname = message.content
+                            nationfile = message.content + ".txt"
+                            # if nation exists: true, proceed
+                            try:
+                                f = open(nationfile)
+                                f.close()
+                            except FileNotFoundError:
+                                await channel.send("That nation does not exist.")
+                                canrun = False
+                            else:
+                                with open(nationfile) as json_file:
+                                    nation = json.load(json_file)
+                                if nation["userid"] == userid:
+                                    await channel.send("Please enter the name of the fleet.")
+                                    try:
+                                        await client.wait_for('message', timeout=60)
+                                    except asyncio.TimeoutError:
+                                        await channel.send(embed=embedtimeout)
+                                        canrun = False
+                                    else:
+                                        async for message in channel.history(limit=1):
+                                            if message.author == user:
+                                                fleetname = message.content
+                                                # if fleet exists, false: proceed
+                                                if keys_exists(nation, "fleets", fleetname):
+                                                    await channel.send("You have already created a fleet with that name.")
+                                                    canrun = False
+                                                else:
+                                                    nation["fleets"][fleetname] = {}
+                                                    fleetcanrun = True
+                                                    while fleetcanrun == True and canrun == True:
+                                                        await channel.send("What ship would you like to add to {}?".format(fleetname))
+                                                        try:
+                                                            await client.wait_for('message', timeout=60)
+                                                        except asyncio.TimeoutError:
+                                                            await channel.send(embed=embedtimeout)
+                                                            canrun = False
+                                                        else:
+                                                            async for message in channel.history(limit=1):
+                                                                if message.author == user:
+                                                                    shipadd = message.content
+                                                                    if shipadd == "cancel":
+                                                                        await channel.send("Process cancelled.")
+                                                                        canrun =  False
+                                                                    else:
+                                                                        if keys_exists(nation, "ships", shipadd):
+                                                                            await channel.send("How many {} would you like to add to {}?".format(shipadd, fleetname))
+                                                                            try:
+                                                                                await client.wait_for('message', timeout=60)
+                                                                            except asyncio.TimeoutError:
+                                                                                await channel.send(embed=embedtimeout)
+                                                                                canrun = False
+                                                                            else:
+                                                                                async for message in channel.history(limit=1):
+                                                                                    if message.author == user:
+                                                                                        try:
+                                                                                            shipamount = int(message.content)
+                                                                                        except ValueError:
+                                                                                            await channel.send(embed=embedvalueerror)
+                                                                                        else:
+                                                                                            # if ship already in dic; false: proceed
+                                                                                            if shipamount <= 0:
+                                                                                                await channel.send("Please enter an integer greater than 0.")
+                                                                                                canrun = False
+                                                                                            else:
+                                                                                                if keys_exists(nation, "fleets", fleetname, shipadd):
+                                                                                                    await channel.send("You have already added {} to {}".format(shipadd, fleetname))
+                                                                                                    canrun = False
+                                                                                                else:
+                                                                                                    if keys_exists(nation, "fleets", fleetname, shipadd):
+                                                                                                        await channel.send("You have already added {} to {}".format(shipadd, fleetname))
+                                                                                                        canrun = False
+                                                                                                    else:
+                                                                                                        nation["fleets"][fleetname][shipadd] = shipamount
+                                                                                                        with open(nationfile, "w") as outfile:
+                                                                                                            json.dump(nation, outfile)
+                                                                                                        await channel.send("Fleet updated. Would you like to add another ship to {}? (yes/no)".format(fleetname))
+                                                                                                        try:
+                                                                                                            await client.wait_for('message', timeout=60)
+                                                                                                        except asyncio.TimeoutError:
+                                                                                                            await channel.send(embed=embedtimeout)
+                                                                                                            canrun = False
+                                                                                                        else:
+                                                                                                            async for message in channel.history(limit=1):
+                                                                                                                if message.author == user:
+                                                                                                                    if message.content == "yes":
+                                                                                                                        fleetcanrun = True
+                                                                                                                    if message.content == "no":
+                                                                                                                        fleetdic = nation["fleets"][fleetname]
+                                                                                                                        amountlist = [*fleetdic.values()]
+                                                                                                                        shipnamelist = [*fleetdic.keys()]
+                                                                                                                        embedfleetsummary = discord.Embed(title='{}'.format(fleetname))
+                                                                                                                        for i in range(0, len(amountlist)):
+                                                                                                                            embedfleetsummary.add_field(name='{}'.format(shipnamelist[i]), value = "{} ships".format(amountlist[i]), inline = True)
+                                                                                                                        await channel.send(embed=embedfleetsummary)
+                                                                                                                        canrun = False
+                                                                        else:
+                                                                            await channel.send("That ship does not exist.")
+                                                                            canrun = False
+                                else:
+                                    await channel.send("You do not own that nation.")
+                                    canrun = False
                 else:
                     if message.author == user:
                         canrun = False
