@@ -32,3 +32,6 @@ Utilises the NS API to gather information and send it.
 Uses the fleets from Ships and Fleets to simulate a battle.
 ## Mod Approval System
 Could be implemented in all main features.
+
+# Links
+NS API documentation: https://www.nationstates.net/pages/api.html
