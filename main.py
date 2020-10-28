@@ -1,12 +1,17 @@
-import os
-import discord
-import math
 import asyncio
-import random
+import discord
 import json
-import wikipedia
+import math
+import os
+import random
+import re
+import requests
+import time
 import wikia
+import wikipedia
+from datetime import datetime
 from discord.ext import commands
+import xml.etree.ElementTree as ElementTree
 client = commands.Bot(command_prefix='!', help_command=None)
 
 def keys_exists(element, *keys):
@@ -1138,5 +1143,221 @@ async def ball(ctx):
     ballrandom = random.randint(0, 19)
     message = listofballresponses[ballrandom]
     await ctx.channel.send(message)
+    
+# NATIONSTATES ----
+# HELP
+embedhelpnhappen = discord.Embed(title='National Happenings')
+embedhelpnhappen.add_field(name='Argument', value="""!national_happenings <nation_name>
 
+**nation_name** - name of the nation to get events from.""")
+
+# GLOBAL VARS
+now = datetime.now()
+date_today = now.strftime("%d/%m/%Y")
+
+# CONSTANTS
+custom_time = 0.4
+headers = {"User-Agent":'NATION_NAME'}
+censusiddict = {"0" : "Civil rights", 
+"1" : "Economy", 
+"2" : "Political freedoms", 
+"3" : "Population", 
+"4" : "Wealth gaps", 
+"5" : "Death rate", 
+"6" : "Compassion", 
+"7" : "Eco-friendliness", 
+"8" : "Social conservatism", 
+"9" : "Nudity", 
+"10" : "Industry: Automobile manufacturing", 
+"11" : "Industry: cheese exports", 
+"12" : "Industry: basket weaving", 
+"13" : "Industry: information technology", 
+"14" : "Industry: pizza delivery", 
+"15" : "Industry: trout fishing", 
+"16" : "Industry: arms manufacturing", 
+"17" : "Sector: agriculture", 
+"18" : "Industry: beverage sales", 
+"19" : "Industry: timber woodchipping", 
+"20" : "Industry: mining", 
+"21" : "Industry: insurance", 
+"22" : "Industry: furniture restoration", 
+"23" : "Industry: retail", 
+"24" : "Industry: book publishing", 
+"25" : "Industry: gambling", 
+"26" : "Sector: manufacturing", 
+"27" : "Government size", 
+"28" : "Welfare", 
+"29" : "Public healthcare", 
+"30" : "Law enforcement", 
+"31" : "Business subsidization", 
+"32" : "Religiousness", 
+"33" : "Income equality", 
+"34" : "Niceness", 
+"35" : "Rudeness", 
+"36" : "Intelligence", 
+"37" : "Ignorance", 
+"38" : "Political apathy", 
+"39" : "Health", 
+"40" : "Cheerfulness", 
+"41" : "Weather", 
+"42" : "Compliance", 
+"43" : "Safety", 
+"44" : "Lifespan", 
+"45" : "Ideological radicality", 
+"46" : "Defense forces", 
+"47" : "Pacifism", 
+"48" : "Economic freedom", 
+"49" : "Taxation", 
+"50" : "Freedom from taxation", 
+"51" : "Corruption", 
+"52" : "Integrity", 
+"53" : "Authoritarianism", 
+"54" : "Youth rebelliousness", 
+"55" : "Culture", 
+"56" : "Employment", 
+"57" : "Public transport", 
+"58" : "Tourism", 
+"59" : "Weaponization", 
+"60" : "Recreational drug use", 
+"61" : "obesity", 
+"62" : "Secularism", 
+"63" : "Environmental beauty", 
+"64" : "Charmlessness", 
+"65" : "Influence", 
+"66" : "World assembly endorsements", 
+"67" : "Averageness", 
+"68" : "Human development index", 
+"69" : "Primitiveness", 
+"70" : "Scientific advancement", 
+"71" : "Inclusiveness", 
+"72" : "Average income", 
+"73" : "Average income of poor", 
+"74" : "Average income of rich", 
+"75" : "Public education", 
+"76" : "Economic output", 
+"77" : "Crime", 
+"78" : "Foreign aid", 
+"79" : "Black market", 
+"80" : "Residency", 
+"81" : "Survivors", 
+"82" : "zombies", 
+"83" : "Dead", 
+"84" : "Percentage zombies", 
+"85" : "Average disposable income", 
+"86" : "International artwork"}
+
+# EXCEPTIONS
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
+        await ctx.send("A required argument is missing!")
+
+
+# NATION
+@client.command(name='noverview')
+async def noverview(ctx, nationinput):
+    try:
+        async with ctx.typing():
+            nation = str(nationinput)
+            response = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={nation}", headers=headers)
+            root = ElementTree.fromstring(response.content)
+            nation = root.find("NAME").text
+            nationurl = f"https://www.nationstates.net/nation={nation}"
+            embednoverview = discord.Embed(title=nation, description="Overview", url=nationurl)
+            flagurl = root.find("FLAG").text
+            ntype = root.find("TYPE").text
+            motto = root.find("MOTTO").text
+            category = root.find("CATEGORY").text
+            wastatus = root.find("UNSTATUS").text
+            influence = root.find("INFLUENCE").text
+            population_base = root.find("POPULATION").text
+            population = population_base + " million"
+            animal = root.find("ANIMAL").text
+            region = root.find("REGION").text
+            region_base = region.replace(" ", "_")
+            region_link = f"https://www.nationstates.net/region={region_base}"
+            currency = root.find("CURRENCY").text
+            leader = root.find("LEADER").text
+            capital = root.find("CAPITAL").text
+            religion = root.find("RELIGION").text
+            response2 = requests.get(f'https://www.nationstates.net/cgi-bin/api.cgi?nation={nation};q=census;mode=score;scale=66', headers=headers)
+            root2 = ElementTree.fromstring(response2.content)
+            endolen = root2[0][0][0]
+            embednoverview.set_thumbnail(url=flagurl)
+            embednoverview.add_field(name="National Information", value=f"""Name: The {ntype} of **{nation}**
+Motto: *{motto}*
+Classification: {category}
+Population: {population}
+Capital: {capital}
+Leader: {leader}
+Religion: {religion}
+Currency: {currency}
+Animal: {animal}""")
+            embednoverview.add_field(name='International Information', value=f"""Region: [{region}]({region_link})
+WA Status: {wastatus}
+Endorsement Count: {endolen}
+Influence: {influence}""", inline=False)
+            await ctx.send(embed=embednoverview)
+    except:
+        await ctx.send("Nation cannot be found.")
+
+@client.command(name='nhappenings')
+async def nhappen(ctx, nationinput):
+    try:
+        async with ctx.typing():
+            nation = str(nationinput)
+            response = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={nation}&q=happenings", headers = headers)
+            root = ElementTree.fromstring(response.content)
+            response2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={nation}", headers=headers)
+            root2 = ElementTree.fromstring(response2.content)
+            flagurl = root2.find("FLAG").text
+            nation = root2.find("NAME").text
+            embednhappen = discord.Embed(title=nation, description="Happenings")
+            embednhappen.set_thumbnail(url=flagurl)
+            for happening in root.findall("HAPPENINGS"):
+                for event in happening.findall("EVENT"):
+                    text = event.find("TEXT").text.replace("@@", "**")
+                    text = text.replace(nationinput, nation)
+                    utc = int(event.find("TIMESTAMP").text)
+                    utctime = str(datetime.utcfromtimestamp(utc).strftime('%d/%m/%Y %H:%M:%S'))
+                    if date_today not in utctime:
+                        pass
+                    else:
+                        if "Following new legislation" in text:
+                            text.replace(f"Following new legislation in **{nation}**, ", "")
+                            text.capitalize()
+                            embednhappen.add_field(name="New Legislation", value=utctime + "\n" + text, inline=False)
+                        elif "was ranked in the" in text:
+                            embednhappen.add_field(name='New Badge', value=utctime + "\n" + text, inline=False)
+                        elif "published" in text:
+                            embednhappen.add_field(name='New Dispatch', value=utctime + "\n" + text, inline=False)
+                        time.sleep(custom_time)
+
+        await ctx.send(embed=embednhappen)
+    except:
+        await ctx.send("Nation cannot be found.")
+
+@client.command(name='ncensus')
+async def ncensus(ctx, nation, censusid, mode):
+    try:
+        async with ctx.typing():
+            censusidinput = str(censusid)
+            modeinput = str(mode)
+            nationinput = str(nation)
+            response = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={nationinput}&q=census&scale={censusidinput}&mode={modeinput}", headers = headers)
+            root = ElementTree.fromstring(response.content)
+            try:
+                censusid = root[0].get("id")
+            except:
+                await ctx.send("Params are invalid.")
+            else:
+                result = root[0][0][0].text
+                censusname = censusiddict[censusidinput]
+                embedncensus = discord.Embed(title=censusname, description=result)
+                embedncensus.add_field(name="Details", value=f"""Census ID: {censusidinput}
+Mode: {mode}""")
+                await ctx.send(embed=embedncensus)
+    except:
+        await ctx.send("Nation cannot be found.")
+    
 client.run("BOT_TOKEN")
