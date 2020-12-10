@@ -27,13 +27,5 @@ Utilises the NS API to gather information and send it.
 - Region
   - All
 
-# Planned Features
-## Battle Simulator
-Uses the fleets from Ships and Fleets to simulate a battle.
-## Mod Approval System
-Could be implemented in all main features.
-## Mod Application System
-Sends a moderator application to the mod channel.
-
 # Links
 NS API documentation: https://www.nationstates.net/pages/api.html
